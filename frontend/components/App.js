@@ -28,31 +28,37 @@ export default class App extends React.Component {
     todos: todoList,
   };
 
-  constructor() {
-    super();
-    this.setState = {
-      todoList: todoList,
-    };
-  }
+  // constructor() {
+  //   super();
+  //   this.setState = {
+  //     todoList: todoList,
+  //   };
+  // }
 
-  addTodo = (e, todo) => {
-    e.preventDefault();
-    const newTodo = {
-      name: todo,
-      id: getId(),
-      taskCompleted: false,
-    };
+  addTodo = ( name ) => {
     this.setState({
       ...this.state,
-      todoList: [...this.state.todoList, newTodo],
-    });
-  };
+      todos: this.state.todos.concat({ id: getId(), taskCompleted: false, name })
+    })
+  }
+
+  // addTodo = (e, name) => {
+  //   // e.preventDefault();
+  //   const newTodo = {
+  //     name: name,
+  //     id: getId(),
+  //     taskCompleted: false
+  //   }
+  //   this.setState({
+  //     ...this.state, todoList: [...this.state.todoList, newTodo]
+  //   })
+  // }
 
   toggleItem = (id) => {
     this.setState({
       ...this.state,
       todos: this.state.todos.map((td) => {
-        if (id == td.id) return { ...td, taskCompleted: !td.taskCompleted };
+        if (id === td.id) return { ...td, taskCompleted: !td.taskCompleted };
         return td;
       }),
     });
@@ -63,7 +69,7 @@ export default class App extends React.Component {
       <div>
         {/* Todo App */}
         <TodoList todos={this.state.todos} toggleItem={this.toggleItem} />
-        <Form />
+        <Form addTodo={this.addTodo} />
       </div>
     );
   }
